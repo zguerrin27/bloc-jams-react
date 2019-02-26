@@ -12,7 +12,8 @@ class Album extends Component {
     this.state = {
       album: album,
       currentSong: album.songs[0],
-      isPlaying: false
+      isPlaying: false,
+      currentHoveredSong: null
     };
 
     this.audioElement = document.createElement('audio');
@@ -44,6 +45,27 @@ class Album extends Component {
     }
   }
 
+  onHover(index) {
+    this.setState({ isHovered: index });
+    }
+
+    offHover() {
+        this.setState({ isHovered: false });
+    }
+
+    hoverIcon(song, index) {
+        const isSameSong = this.state.currentSong === song;
+        if (this.state.isHovered === index) {
+            return <span className="icon ion-md-play" />;
+        } else if (this.state.isPlaying && isSameSong) {
+            return <span className="icon ion-md-pause" />;
+        } else {
+            return <span className="song-number">{index + 1}</span>;
+        }
+    }
+
+  
+
     render() {
       return (
         <section className="album">
@@ -62,20 +84,22 @@ class Album extends Component {
              <col id="song-duration-column" />
            </colgroup>  
            <tbody>
-              {
-                this.state.album.songs.map( (song, index) =>
-                <tr className="song" key={index} onClick={() => this.handleSongClick(song)} >
-                    <td className="song-number">{index + 1}</td>
-                    <td className="song-title">{song.title}</td>
-                    <td className="song-duration">{song.duration}</td>
-                </tr>
-                )
-              }
-           </tbody>
-         </table>
-        </section>
+                {
+                  this.state.album.songs.map( (song, index) =>
+                    <tr className="song" key={index} onClick={() => this.handleSongClick(song)} onMouseEnter={() => this.onHover(index)} onMouseLeave={() => this.offHover()}>
+                        <td className="song-number">{this.hoverIcon(song, index)}</td>
+                        <td className="song-title">{song.title}</td>
+                        <td className="song-duration">{song.duration}</td>
+
+                    </tr>
+                    )
+                  }
+            </tbody>
+          </table>
+          </section>
       );
     }
   }
 
 export default Album;
+
