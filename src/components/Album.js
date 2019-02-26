@@ -13,7 +13,8 @@ class Album extends Component {
       album: album,
       currentSong: album.songs[0],
       isPlaying: false,
-      currentHoveredSong: null
+      isHovered: false,
+      isPaused: false
     };
 
     this.audioElement = document.createElement('audio');
@@ -22,12 +23,12 @@ class Album extends Component {
 
   play() {
     this.audioElement.play();
-    this.setState({ isPlaying: true });
+    this.setState({ isPlaying: true, isPaused: false });
   }
 
   pause() {
     this.audioElement.pause();
-    this.setState({ isPlaying: false });
+    this.setState({ isPlaying: false, isPaused: true });
   }
   
   setSong(song) {
@@ -49,54 +50,55 @@ class Album extends Component {
     this.setState({ isHovered: index });
     }
 
-    offHover() {
-        this.setState({ isHovered: false });
-    }
+  offHover() {
+      this.setState({ isHovered: false });
+  }
 
-    hoverIcon(song, index) {
-        const isSameSong = this.state.currentSong === song;
-        if (this.state.isHovered === index) {
-            return <span className="icon ion-md-play" />;
-        } else if (this.state.isPlaying && isSameSong) {
-            return <span className="icon ion-md-pause" />;
-        } else {
-            return <span className="song-number">{index + 1}</span>;
-        }
-    }
+  hoverIcon(song, index) {
+      const isSameSong = this.state.currentSong === song;
+      if (this.state.isHovered === index) {
+          return <span className="icon ion-md-play" />;
+      } else if (this.state.isPlaying && isSameSong) {
+          return <span className="icon ion-md-pause" />;
+      } else if (this.state.isPaused && isSameSong) {
+          return <span className="icon ion-md-play" />
+      } else {
+          return <span className="song-number">{index + 1}</span>;
+      }
+  }
 
-  
 
-    render() {
-      return (
-        <section className="album">
-          <section id="album-info">
-          <img id="album-cover-art" src={this.state.album.albumCover} alt={this.state.album.title}/>
-          <div className="album-details">
-            <h1 id="album-title">{this.state.album.title}</h1>
-            <h2 className="artist">{this.state.album.artist}</h2>
-            <div id="release-info">{this.state.album.releaseInfo}</div>
-          </div>
-         </section>
-         <table id="song-list" className="center">
-           <colgroup>
-             <col id="song-number-column" />
-             <col id="song-title-column" />
-             <col id="song-duration-column" />
-           </colgroup>  
-           <tbody>
-                {
-                  this.state.album.songs.map( (song, index) =>
-                    <tr className="song" key={index} onClick={() => this.handleSongClick(song)} onMouseEnter={() => this.onHover(index)} onMouseLeave={() => this.offHover()}>
-                        <td className="song-number">{this.hoverIcon(song, index)}</td>
-                        <td className="song-title">{song.title}</td>
-                        <td className="song-duration">{song.duration}</td>
 
-                    </tr>
-                    )
-                  }
-            </tbody>
-          </table>
-          </section>
+  render() {
+    return (
+      <section className="album">
+        <section id="album-info">
+        <img id="album-cover-art" src={this.state.album.albumCover} alt={this.state.album.title}/>
+        <div className="album-details">
+          <h1 id="album-title">{this.state.album.title}</h1>
+          <h2 className="artist">{this.state.album.artist}</h2>
+          <div id="release-info">{this.state.album.releaseInfo}</div>
+        </div>
+        </section>
+        <table id="song-list" className="center">
+          <colgroup>
+            <col id="song-number-column" />
+            <col id="song-title-column" />
+            <col id="song-duration-column" />
+          </colgroup>  
+          <tbody>
+            {
+              this.state.album.songs.map( (song, index) =>
+              <tr className="song" key={index} onClick={() => this.handleSongClick(song)} onMouseEnter={() => this.onHover(index)} onMouseLeave={() => this.offHover()}>
+                    <td className="song-number">{this.hoverIcon(song, index)}</td>
+                    <td className="song-title">{song.title}</td>
+                    <td className="song-duration">{song.duration}</td>
+              </tr>
+                )
+              }
+          </tbody>
+        </table>
+        </section>
       );
     }
   }
