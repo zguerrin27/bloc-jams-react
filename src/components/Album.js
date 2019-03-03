@@ -84,9 +84,10 @@ class Album extends Component {
 
   handleNextClick() {
     const currentIndex = this.state.album.songs.findIndex(song => this.state.currentSong === song);
-    const newIndex = Math.max(0, currentIndex + 1);
+    // const newIndex = Math.max(0, currentIndex + 1);
+    const newIndex = Math.min(this.state.album.songs.length, currentIndex + 1);       //  this still doesnt work
     const newSong = this.state.album.songs[newIndex];
-      if (!this.state.isPlaying) {                      // still not correct logic. Does not stop song from playing
+      if (!this.state.isPlaying) {                      
         return null;
       }
       if (!newSong) {
@@ -105,7 +106,7 @@ class Album extends Component {
   handleVolChange(e) {
     // const newVolume = this.audioElement.volume * e.target.value;
     // this.audioElement.volume = newVolume;
-    // this.setState({ volume: newVolume });
+    // this.setState({ volume: newVolume });      // why does this not work
     this.audioElement.volume = e.target.value;
     this.setState({ volume: e.target.value });
   }
@@ -131,6 +132,10 @@ class Album extends Component {
         return <span className="song-number">{index + 1}</span>;
     }
   }
+
+  formatTime(seconds){
+    return seconds ? `${((Math.floor(seconds/60)%60) ^ 0) +':'+ ((seconds%60) ^0)}`: '-:--';
+   }
 
 
   render() {
@@ -172,6 +177,7 @@ class Album extends Component {
            handleNextClick={() => this.handleNextClick()}
            handleTimeChange={(e) => this.handleTimeChange(e)}
            handleVolChange={(e) => this.handleVolChange(e)}
+           formatTime={(time) => this.formatTime(time)}
          />
         </section>
       );
