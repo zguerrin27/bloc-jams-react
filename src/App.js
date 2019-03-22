@@ -4,6 +4,8 @@ import './App.css';
 import Landing from './components/Landing';
 import Library from './components/Library';
 import Album from './components/Album';
+import logo from './components/assets/images/bloc_jams_logo.png';
+
 
 class App extends Component {
   render() {
@@ -14,7 +16,7 @@ class App extends Component {
             <Link to='/'>Landing</Link>
             <Link to='/Library'>Library</Link>
           </nav>
-          <h1>Bloc Jams</h1>
+          <img className="logo" src={logo} alt="logo pic"/>
         </header>
         <main>
           <Route exact path="/" component={Landing} />

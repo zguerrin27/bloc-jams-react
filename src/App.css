@@ -8,17 +8,53 @@ table.center {
 }
 
 header {
-  margin: 0px;
+  position: absolute;
 }
 
 .headerNav a {
-  margin: 15px;
+  margin: 0 15px;
 }
 
-header h1 {
-  color: white;
+.hero-title {
+  font-size: 80px;
+  font-family: 'Bangers', cursive;
 }
+
 
 .landing {
-  margin-top: 5rem;
+  background-image: url(./components/assets/images/applause.jpg);
+  width: 100%;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+  margin-top: 85px;
+  position: fixed;
+} 
+
+.library {
+  background-image: url(./components/assets/images/blurred_backgrounds/blur_bg_3.jpg);
+  width: 100%;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+  position: fixed;
 }
+
+.library a {
+  float: left;
+  margin: 25vh 15vh;
+}
+
+.album {
+  margin-top: 25vh;
+}
+
+#album-cover-art {
+  float: left;
+  margin: 0 15vh;
+}
+
