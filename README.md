@@ -1,3 +1,10 @@
+This app is an in-browser media player. 
+
+It allows you to play music...switch songs..adjust volume, skip to certain parts of songs.
+
+I really enjoyed learning about managing state and passing props to different components..as well as the logic used to present certain information in certain views. Once I have more time...I will go back and fix up the syling and maybe add more cds with songs that users can popluate a library with. I will  also be hosting this on heroku soon.
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
